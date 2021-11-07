@@ -3,12 +3,22 @@ package com.kodilla.accounts.controller;
 import com.kodilla.accounts.controller.response.GetAccountsResponse;
 import com.kodilla.accounts.mapper.AccountMapper;
 import com.kodilla.accounts.service.AccountsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("/v1/accounts")
 public class AccountsController {
+
+    @Value("${application.allow-get-accounts}")
+    private boolean allowGetAccounts;
 
     private final AccountsService accountsService;
     private final AccountMapper accountMapper;
@@ -19,8 +29,12 @@ public class AccountsController {
         this.accountMapper = accountMapper;
     }
 
-    @GetMapping()
+    @GetMapping
     public GetAccountsResponse getCustomerAccounts(@RequestParam Long customerId) {
+        if(!allowGetAccounts) {
+            log.info("Getting accounts is disabled");
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Getting accounts is disabled");
+        }
         return GetAccountsResponse.of(
                 accountMapper.mapToAccountDtoList(accountsService.getCustomerAccounts(customerId)));
     }
