@@ -1,6 +1,7 @@
 package com.kodilla.accounts.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Entity(name = "ACCOUNT")
+@Builder
 public class Account {
 
 

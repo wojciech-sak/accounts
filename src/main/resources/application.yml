@@ -28,4 +28,4 @@ eureka:
   client: ${eureka-client}
 
 server:
-  port: 9999
+  port: 9997
