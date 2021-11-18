@@ -51,7 +51,11 @@ dependencies {
 
    implementation 'mysql:mysql-connector-java'
 
-   compileOnly 'org.projectlombok:lombok:1.18.12'
+//    implementation 'io.rest-assured:rest-assured:4.3.2'
+//    implementation 'io.rest-assured:json-path:4.3.2'
+    compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '3.0.0-M5'
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
    testCompileOnly 'org.projectlombok:lombok:1.18.12'
